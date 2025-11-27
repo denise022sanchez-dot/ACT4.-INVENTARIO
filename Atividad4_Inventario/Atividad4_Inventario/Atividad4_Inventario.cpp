@@ -37,6 +37,49 @@ int main()
     // Llamamos a esta función para llenar el arreglo con 10 productos iniciales
     cargarDatosEjemplo(inventario, cantidadActual);
 
+    do {
+
+        //Se muestran las opciones del menu
+        cout << "\n--- SISTEMA DE GESTION DE PRODUCTOS ---\n";
+        cout << "1. Registrar nuevo producto\n";
+        cout << "2. Buscar producto por ID\n";
+        cout << "3. Buscar producto por Nombre\n";
+        cout << "4. Ordenar inventario\n";
+        cout << "5. Modificar Stock\n";
+        cout << "6. Mostrar todo\n";
+        cout << "7. Salir\n";
+        cout << "Opcion: ";
+        cin >> opcion;
+
+
+        // Validación de entrada, Si el usuario escribe letras en vez de números
+        if (cin.fail()) {
+            cin.clear(); //Limpia el estado de error
+            cin.ignore(1000, '\n'); //Ignora la entrada incorrecta
+            opcion = 0; //Fuerza una opción inválida para repetir el menú
+        }
+
+        switch (opcion){
+        
+        case 1:
+
+        case 2:
+        
+        case 3:
+        
+        case 4:
+
+        case 5:
+
+        case 6:
+
+        case 7:
+
+        default: cout << "Opcion invalida.\n";
+
+        }
+
+    } while (opcion != 7);
 
     return 0;
 }
