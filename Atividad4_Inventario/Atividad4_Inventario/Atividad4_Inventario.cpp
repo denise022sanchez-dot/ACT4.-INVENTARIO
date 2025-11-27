@@ -43,20 +43,6 @@ int main()
 
 
 
-void cargarDatosEjemplo(Producto inventario[], int& cantidadActual) {
-    //Llena manualmente las primeras 10 posiciones del arreglo
-    inventario[0] = { 101, "Laptop", 12000, 5 };
-    inventario[1] = { 102, "Mouse", 250.00, 20 };
-    inventario[2] = { 103, "Teclado", 500.00, 15 };
-    inventario[3] = { 104, "Monitor", 4500.00, 8 };
-    inventario[4] = { 105, "USB", 150.00, 50 };
-    inventario[5] = { 106, "HDMI", 100.00, 30 };
-    inventario[6] = { 107, "Tablet", 8000.00, 12 };
-    inventario[7] = { 108, "Libreta", 350.00, 25 };
-    inventario[8] = { 109, "Webcam", 950.00, 10 };
-    inventario[9] = { 110, "Silla", 3500.00, 4 };
-    cantidadActual = 10; //Actualiza el contador
-}
 
 void registrarProducto(Producto inventario[], int& cantidadActual) {
     if (cantidadActual >= MAX_PRODUCTOS) {
@@ -84,4 +70,60 @@ int buscarPorID(Producto inventario[], int cantidadActual, int idBuscado) {
     }
     // Si termina el ciclo for sin éxito, lanza el error manualmente
     throw runtime_error("El ID proporcionado no existe en el inventario.");
+}
+
+
+//Compara los datos que es estan a los lados del pivote. Para ordenar por el metodo de burbuja
+void ordenarPorPrecio(Producto inventario[], int cantidadActual) {
+    for (int i = 0; i < cantidadActual - 1; i++) {
+        for (int j = 0; j < cantidadActual - i - 1; j++) {
+            // Si el precio actual es mayor al siguiente, los intercambia
+            if (inventario[j].precio > inventario[j + 1].precio) {
+                Producto temp = inventario[j];
+                inventario[j] = inventario[j + 1];
+                inventario[j + 1] = temp;
+            }
+        }
+    }
+}
+
+//Esta funcion ordena por seleccion, busca el menor y lo mueve al inicio
+void ordenarPorCantidad(Producto inventario[], int cantidadActual) {
+    for (int i = 0; i < cantidadActual - 1; i++) {
+        int minIdx = i; // Asumimos que el actual es el menor
+        // Buscamos si hay alguien menor en el resto de la lista
+        for (int j = i + 1; j < cantidadActual; j++) {
+            if (inventario[j].cantidad < inventario[minIdx].cantidad) {
+                minIdx = j; // Guardamos la posición del nuevo menor
+            }
+        }
+        // Hacemos el intercambio (swap)
+        Producto temp = inventario[minIdx];
+        inventario[minIdx] = inventario[i];
+        inventario[i] = temp;
+    }
+}
+
+//Funcion para modificar los datos utilizando punteros
+void modificarStock(Producto* prod, int nuevaCantidad) {
+    // 'prod' es una dirección de memoria.
+    // El operador flecha se usa para acceder a los campos desde un puntero.
+    // Esto modifica directamente el dato original en memoria.
+    prod->cantidad = nuevaCantidad;
+    cout << "Stock actualizado correctamente para el producto: " << prod->nombre << endl;
+}
+
+//Funcion para mostrar el inventario
+void mostrarInventario(Producto inventario[], int cantidadActual) {
+    cout << "\n--- LISTA DE PRODUCTOS ---\n";
+    cout << "ID\tNombre\t\tPrecio\t\tCant.\n";
+    cout << "------------------------------------------------\n";
+    for (int i = 0; i < cantidadActual; i++) {
+        // Imprime usando tabuladores (\t) para separar columnas
+        cout << inventario[i].id << "\t"
+            << inventario[i].nombre << "\t\t$"
+            << inventario[i].precio << "\t\t"
+            << inventario[i].cantidad << endl;
+    }
+    cout << "------------------------------------------------\n";
 }
