@@ -62,18 +62,91 @@ int main()
         switch (opcion){
         
         case 1:
+            // Llama a la función para agregar un producto al final del arreglo
+            registrarProducto(inventario, cantidadActual);
+            break;
 
-        case 2:
+        case 2: {
+            int id;
+            cout << "Ingrese ID a buscar: ";
+            cin >> id;
+            // El bloque 'try' intenta ejecutar el código
+            try {
+                // Si buscarPorID falla, lanzará un error que saltará al 'catch'
+                int index = buscarPorID(inventario, cantidadActual, id);
+                cout << "--> Producto encontrado: " << inventario[index].nombre
+                    << " | Precio: $" << inventario[index].precio << endl;
+            }
+            // El bloque 'catch' atrapa el error para que el programa no se cierre de golpe
+            catch (const runtime_error& e) {
+                cout << "\n[ERROR DE EXCEPCION]: " << e.what() << endl;
+            }
+            break;
+        }
         
-        case 3:
-        
-        case 4:
+        case 3: {
+            string nombre;
+            cout << "Ingrese nombre a buscar: ";
+            cin.ignore(); //Limpia el buffer del teclado antes de leer texto
+            getline(cin, nombre); //Lee el nombre completo (incluyendo espacios)
 
-        case 5:
+            //Se realiza busqueda secuencial recorre todo el arreglo comparando nombres
+            bool encontrado = false;
+            for (int i = 0; i < cantidadActual; i++) {
+                if (inventario[i].nombre == nombre) {
+                    cout << "--> Encontrado ID " << inventario[i].id
+                        << ": " << inventario[i].nombre << endl;
+                    encontrado = true;
+                }
+            }
+            if (!encontrado) cout << "Producto no encontrado.\n";
+            break;
+        }
+        
+        case 4: {
+            int criterio;
+            cout << "Ordenar por: 1. Precio (Burbuja) | 2. Cantidad (Seleccion): ";
+            cin >> criterio;
+            //El usuario elige qué algoritmo de ordenamiento usar
+            if (criterio == 1) ordenarPorPrecio(inventario, cantidadActual);
+            else if (criterio == 2) ordenarPorCantidad(inventario, cantidadActual);
+
+            cout << "Inventario ordenado. Seleccione 'Mostrar todo' para ver cambios.\n";
+            break;
+        }
+
+        case 5: {
+
+            int id, nuevaCant;
+            cout << "Ingrese ID del producto a modificar: ";
+            cin >> id;
+            try {
+                // Primero buscamos dónde está el producto
+                int index = buscarPorID(inventario, cantidadActual, id);
+
+                cout << "Producto actual: " << inventario[index].nombre
+                    << " | Cantidad actual: " << inventario[index].cantidad << endl;
+                cout << "Ingrese nueva cantidad: ";
+                cin >> nuevaCant;
+
+                // Enviamos la direccion de memoria de ese producto específico.
+                // Esto permite que la función edite el original y no una copia.
+                modificarStock(&inventario[index], nuevaCant);
+
+            }
+            catch (const runtime_error& e) {
+                cout << "[ERROR]: " << e.what() << endl;
+            }
+            break;
+        }
 
         case 6:
+            mostrarInventario(inventario, cantidadActual);
+            break;
 
         case 7:
+            cout << "Saliendo del sistema...\n";
+            break;
 
         default: cout << "Opcion invalida.\n";
 
