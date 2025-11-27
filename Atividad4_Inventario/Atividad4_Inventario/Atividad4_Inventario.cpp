@@ -41,8 +41,20 @@ int main()
     return 0;
 }
 
-
-
+void cargarDatosEjemplo(Producto inventario[], int& cantidadActual) {
+    //Llena manualmente las primeras 10 posiciones del arreglo
+    inventario[0] = { 101, "Laptop", 12000, 5 };
+    inventario[1] = { 102, "Mouse", 250.00, 20 };
+    inventario[2] = { 103, "Teclado", 500.00, 15 };
+    inventario[3] = { 104, "Monitor", 4500.00, 8 };
+    inventario[4] = { 105, "USB", 150.00, 50 };
+    inventario[5] = { 106, "HDMI", 100.00, 30 };
+    inventario[6] = { 107, "Tablet", 8000.00, 12 };
+    inventario[7] = { 108, "Libreta", 350.00, 25 };
+    inventario[8] = { 109, "Webcam", 950.00, 10 };
+    inventario[9] = { 110, "Silla", 3500.00, 4 };
+    cantidadActual = 10; //Actualiza el contador
+}
 
 void registrarProducto(Producto inventario[], int& cantidadActual) {
     if (cantidadActual >= MAX_PRODUCTOS) {
